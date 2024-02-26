@@ -2,6 +2,7 @@ package com.example.TallerElectivaSupabase.services;
 
 import com.example.TallerElectivaSupabase.entities.Car;
 import com.example.TallerElectivaSupabase.entities.Buyer;
+import com.example.TallerElectivaSupabase.entities.Supplier;
 import com.example.TallerElectivaSupabase.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,8 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public Car save(Car car, Buyer proper){
+    public Car save(Car car, Buyer proper, List<Supplier> supplier){
+        car.setSupplier(supplier);
         car.setProper(proper);
 
         return carRepository.save(car);

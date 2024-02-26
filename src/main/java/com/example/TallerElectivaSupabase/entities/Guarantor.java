@@ -1,5 +1,6 @@
 package com.example.TallerElectivaSupabase.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -20,6 +21,7 @@ public class Guarantor {
     private LocalDate fecha_nacimiento;
     @OneToOne
     @JoinColumn(name = "buyer", unique = true)
+    @JsonIgnore
     private Buyer buyer;
 
     public Guarantor() {

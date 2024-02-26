@@ -44,16 +44,16 @@ public class GuarantorController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Object> save(@RequestBody Guarantor guarantor, @PathVariable Integer idComprador ){
+    public ResponseEntity<Object> save(@RequestBody Guarantor guarantor, @PathVariable Integer id ){
         try{
-            Buyer proper = properService.findById( idComprador );
+            Buyer proper = properService.findById( id );
             if( proper != null ){
 
                 Guarantor result = guarantorService.save( guarantor, proper );
 
                 return ResponseHandler.generateResponse("Succes",HttpStatus.CREATED, guarantor );
             }
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No encuentro propietario",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 

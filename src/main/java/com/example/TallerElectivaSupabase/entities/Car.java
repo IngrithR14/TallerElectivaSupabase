@@ -1,5 +1,6 @@
 package com.example.TallerElectivaSupabase.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
@@ -24,6 +25,7 @@ public class Car {
     private Buyer buyer;
 
     @ManyToMany(mappedBy = "car")
+    @JsonBackReference
     private List<Supplier> supplier;
 
     public Car() {

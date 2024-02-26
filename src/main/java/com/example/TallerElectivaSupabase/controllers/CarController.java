@@ -2,14 +2,17 @@ package com.example.TallerElectivaSupabase.controllers;
 
 import com.example.TallerElectivaSupabase.entities.Car;
 import com.example.TallerElectivaSupabase.entities.Buyer;
+import com.example.TallerElectivaSupabase.entities.Supplier;
 import com.example.TallerElectivaSupabase.responses.ResponseHandler;
 import com.example.TallerElectivaSupabase.services.CarService;
 import com.example.TallerElectivaSupabase.services.BuyerService;
+import com.example.TallerElectivaSupabase.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,7 +22,8 @@ public class CarController {
     private CarService carService;
     @Autowired
     private BuyerService properService;
-
+    @Autowired
+    private SupplierService supplierService;
     @GetMapping
     public ResponseEntity<Object> findAll(){
         try{
@@ -34,12 +38,15 @@ public class CarController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Object> save(@RequestBody Car car, @PathVariable Integer id ){
+    public ResponseEntity<Object> save(@RequestBody Car car, @PathVariable Integer id,@RequestParam Integer idS ){
         try{
             Buyer proper = properService.findById( id );
+            Supplier supplier = supplierService.findById(idS);
+            List<Supplier> supplierList=new ArrayList<>();
+            supplierList.add(supplier);
             if( proper != null ){
 
-                Car result = carService.save( car, proper );
+                Car result = carService.save( car, proper ,supplierList);
 
                 return ResponseHandler.generateResponse("Succes",HttpStatus.CREATED, car );
             }

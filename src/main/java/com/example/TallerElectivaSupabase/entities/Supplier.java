@@ -1,6 +1,7 @@
 package com.example.TallerElectivaSupabase.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -19,9 +20,10 @@ public class Supplier {
     @ManyToMany
     @JoinTable(
             name = "ProovedordeCarro",
-            joinColumns = @JoinColumn(name = "car"),
-            inverseJoinColumns = @JoinColumn(name = "supplier")
+            joinColumns = @JoinColumn(name = "cars_id"),
+            inverseJoinColumns = @JoinColumn(name = "suppliers_id")
     )
+    @JsonManagedReference
     private List<Car> car;
 
     public Supplier() {
