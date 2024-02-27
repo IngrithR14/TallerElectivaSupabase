@@ -5,8 +5,11 @@ import com.example.TallerElectivaSupabase.entities.Buyer;
 import com.example.TallerElectivaSupabase.entities.Supplier;
 import com.example.TallerElectivaSupabase.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +32,11 @@ public class CarService {
         Optional<Car> optionalCar = carRepository.findById( id );
 
         return optionalCar.isPresent() ? optionalCar.get() : null;
+    }
+    @Modifying
+    @Transactional
+    public int updateCarById(Integer id, String marcaN, String colorN,String matriculaN) {
+        return carRepository.updateCarById(id,marcaN,colorN,matriculaN);
     }
 
     public void delete( Car car ){

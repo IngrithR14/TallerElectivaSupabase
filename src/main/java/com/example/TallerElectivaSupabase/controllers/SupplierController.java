@@ -6,10 +6,12 @@ import com.example.TallerElectivaSupabase.responses.ResponseHandler;
 import com.example.TallerElectivaSupabase.services.CarService;
 import com.example.TallerElectivaSupabase.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -67,6 +69,22 @@ public class SupplierController {
             return ResponseEntity.ok("Car associated with Supplier successfully.");
         } else {
             return ResponseEntity.badRequest().body("Car or Supplier not found.");
+        }
+    }
+    @PutMapping("/{id}/supplier")
+    public ResponseEntity<Object> updateSupplier(@PathVariable Integer id,
+                                               @RequestParam String nombreEmpresaN,
+                                               @RequestParam String contactoN) {
+        try {
+            int updatedRowsSupplier = supplierService.updateSupplierById(id,nombreEmpresaN,contactoN);
+
+            if (updatedRowsSupplier > 0) {
+                return ResponseHandler.generateResponse("Success", HttpStatus.OK, null);
+            } else {
+                return ResponseHandler.generateResponse("No se encontró el proveedor con el ID proporcionado", HttpStatus.NOT_FOUND, null);
+            }
+        } catch (Exception e) {
+            return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
         }
     }
 

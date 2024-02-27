@@ -4,8 +4,11 @@ import com.example.TallerElectivaSupabase.entities.Guarantor;
 import com.example.TallerElectivaSupabase.entities.Buyer;
 import com.example.TallerElectivaSupabase.repositories.GuarantorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,11 @@ public class GuarantorService {
         Optional<Guarantor> optionalGuarantor = guarantorRepository.findById( id );
 
         return optionalGuarantor.isPresent() ? optionalGuarantor.get() : null;
+    }
+    @Modifying
+    @Transactional
+    public int updateGuarantorById(Integer id, String nombreN, String apellidoN, LocalDate fNacimiento,Integer numeroMatriculaN) {
+        return guarantorRepository.updateGuarantorById(id, nombreN, apellidoN,fNacimiento,numeroMatriculaN);
     }
 
     public void delete( Guarantor guarantor ){
