@@ -19,7 +19,7 @@ public class Buyer {
     private String apellido;
     @Column(nullable = false)
     private LocalDate fecha_nacimiento;
-    @OneToMany(mappedBy = "buyer")
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<Car> cars;
     @OneToOne(mappedBy = "buyer", cascade = CascadeType.REMOVE)
