@@ -81,7 +81,7 @@ public class SupplierController {
                 return ResponseHandler.generateResponse("Succes",HttpStatus.ACCEPTED, supplier );
             }
 
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No se encontro proveedor",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 

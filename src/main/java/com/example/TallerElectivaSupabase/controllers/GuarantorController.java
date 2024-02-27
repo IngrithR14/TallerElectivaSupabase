@@ -72,7 +72,7 @@ public class GuarantorController {
                 return ResponseHandler.generateResponse("Succes",HttpStatus.ACCEPTED, guarantor );
             }
 
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No se encontro Fiador",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 

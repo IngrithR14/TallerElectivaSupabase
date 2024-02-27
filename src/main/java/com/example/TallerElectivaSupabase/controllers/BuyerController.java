@@ -113,7 +113,7 @@ public class BuyerController {
                 return ResponseHandler.generateResponse("Succes",HttpStatus.ACCEPTED, proper );
             }
 
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No se encontro comprador",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 
