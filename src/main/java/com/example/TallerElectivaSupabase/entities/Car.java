@@ -21,11 +21,11 @@ public class Car {
     private String matricula;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.DETACH)
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_cars_to_proper"))
-    @JsonIgnore
+    @JsonBackReference
     private Buyer buyer;
 
     @ManyToMany(mappedBy = "car")
-    @JsonBackReference
+   @JsonIgnore
     private List<Supplier> supplier;
 
     public Car() {
@@ -62,14 +62,6 @@ public class Car {
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    public Buyer getProper() {
-        return buyer;
-    }
-
-    public void setProper(Buyer buyer) {
-        this.buyer = buyer;
     }
 
     public Buyer getBuyer() {

@@ -20,10 +20,9 @@ public class Supplier {
     @ManyToMany
     @JoinTable(
             name = "ProovedordeCarro",
-            joinColumns = @JoinColumn(name = "cars_id"),
-            inverseJoinColumns = @JoinColumn(name = "suppliers_id")
+            joinColumns = @JoinColumn(name = "suppliers_id"),
+            inverseJoinColumns = @JoinColumn(name = "cars_id")
     )
-    @JsonManagedReference
     private List<Car> car;
 
     public Supplier() {

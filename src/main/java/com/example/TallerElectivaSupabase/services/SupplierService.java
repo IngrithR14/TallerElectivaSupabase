@@ -1,6 +1,8 @@
 package com.example.TallerElectivaSupabase.services;
 
+import com.example.TallerElectivaSupabase.entities.Car;
 import com.example.TallerElectivaSupabase.entities.Supplier;
+import com.example.TallerElectivaSupabase.repositories.CarRepository;
 import com.example.TallerElectivaSupabase.repositories.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.util.Optional;
 public class SupplierService {
     @Autowired
     SupplierRepository supplierRepository;
+    @Autowired
+    CarRepository carRepository;
     public List<Supplier> findAllSupplier(){
 
         return supplierRepository.findAll();
@@ -26,7 +30,12 @@ public class SupplierService {
 
         return optionalSupplier.isPresent() ? optionalSupplier.get() : null;
     }
-
+    public void associateCarWithSupplier(Car car, Supplier supplier) {
+        car.getSupplier().add(supplier);
+        supplier.getCar().add(car);
+        carRepository.save(car);
+        supplierRepository.save(supplier);
+    }
     public void delete( Supplier supplier ){
         supplierRepository.delete( supplier );
     }

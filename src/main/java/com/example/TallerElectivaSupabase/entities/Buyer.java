@@ -1,5 +1,6 @@
 package com.example.TallerElectivaSupabase.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class Buyer {
     @Column(nullable = false)
     private LocalDate fecha_nacimiento;
     @OneToMany(mappedBy = "buyer")
+    @JsonManagedReference
     private List<Car> cars;
     @OneToOne(mappedBy = "buyer", cascade = CascadeType.REMOVE)
     private Guarantor fiador;

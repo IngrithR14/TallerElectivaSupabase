@@ -19,9 +19,8 @@ public class CarService {
         return carRepository.findAll();
     }
 
-    public Car save(Car car, Buyer proper, List<Supplier> supplier){
-        car.setSupplier(supplier);
-        car.setProper(proper);
+    public Car save(Car car, Buyer buyer){
+       car.setBuyer(buyer);
 
         return carRepository.save(car);
     }

@@ -2,17 +2,14 @@ package com.example.TallerElectivaSupabase.controllers;
 
 import com.example.TallerElectivaSupabase.entities.Car;
 import com.example.TallerElectivaSupabase.entities.Buyer;
-import com.example.TallerElectivaSupabase.entities.Supplier;
 import com.example.TallerElectivaSupabase.responses.ResponseHandler;
 import com.example.TallerElectivaSupabase.services.CarService;
 import com.example.TallerElectivaSupabase.services.BuyerService;
-import com.example.TallerElectivaSupabase.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,9 +18,7 @@ public class CarController {
     @Autowired
     private CarService carService;
     @Autowired
-    private BuyerService properService;
-    @Autowired
-    private SupplierService supplierService;
+    private BuyerService buyerService;
     @GetMapping
     public ResponseEntity<Object> findAll(){
         try{
@@ -38,15 +33,12 @@ public class CarController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Object> save(@RequestBody Car car, @PathVariable Integer id,@RequestParam Integer idS ){
+    public ResponseEntity<Object> save(@RequestBody Car car, @PathVariable Integer id ){
         try{
-            Buyer proper = properService.findById( id );
-            Supplier supplier = supplierService.findById(idS);
-            List<Supplier> supplierList=new ArrayList<>();
-            supplierList.add(supplier);
+            Buyer proper = buyerService.findById( id );
             if( proper != null ){
 
-                Car result = carService.save( car, proper ,supplierList);
+                Car result = carService.save( car, proper);
 
                 return ResponseHandler.generateResponse("Succes",HttpStatus.CREATED, car );
             }
@@ -69,7 +61,7 @@ public class CarController {
                 return ResponseHandler.generateResponse("Succes",HttpStatus.ACCEPTED, car );
             }
 
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No se encontro el carro",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 

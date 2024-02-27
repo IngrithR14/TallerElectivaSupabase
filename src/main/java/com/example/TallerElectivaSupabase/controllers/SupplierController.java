@@ -1,7 +1,9 @@
 package com.example.TallerElectivaSupabase.controllers;
 
+import com.example.TallerElectivaSupabase.entities.Car;
 import com.example.TallerElectivaSupabase.entities.Supplier;
 import com.example.TallerElectivaSupabase.responses.ResponseHandler;
+import com.example.TallerElectivaSupabase.services.CarService;
 import com.example.TallerElectivaSupabase.services.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,8 @@ import java.util.List;
 public class SupplierController {
     @Autowired
     SupplierService supplierService;
+    @Autowired
+    CarService carService;
 
     @GetMapping
     public ResponseEntity<Object> findAllSupplier(){
@@ -51,6 +55,18 @@ public class SupplierController {
         }catch( Exception e ){
 
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null );
+        }
+    }
+    @PostMapping("/associatesupplier/{carId}/{supplierId}")
+    public ResponseEntity<Object> associateCarWithSupplier(@PathVariable Integer carId, @PathVariable Integer supplierId) {
+        Car car = carService.findById(carId);
+        Supplier supplier = supplierService.findById(supplierId);
+
+        if (car != null && supplier != null) {
+            supplierService.associateCarWithSupplier(car, supplier);
+            return ResponseEntity.ok("Car associated with Supplier successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Car or Supplier not found.");
         }
     }
 

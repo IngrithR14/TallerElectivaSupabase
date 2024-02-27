@@ -17,14 +17,14 @@ import java.util.List;
 @RequestMapping("proper")
 public class BuyerController {
     @Autowired
-    private BuyerService properService;
+    private BuyerService buyerService;
 
     @GetMapping()
     public ResponseEntity<Object> findAll(){
 
         try {
 
-            List<Buyer> result = properService.findAll();
+            List<Buyer> result = buyerService.findAll();
 
             return ResponseHandler.generateResponse("Success", HttpStatus.OK,result);
         }catch (Exception e){
@@ -35,9 +35,9 @@ public class BuyerController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findById( @PathVariable Integer id ){
         try {
-            Buyer proper = properService.findById( id );
+            Buyer buyer = buyerService.findById( id );
 
-            return  ResponseHandler.generateResponse("Success",HttpStatus.OK,proper );
+            return  ResponseHandler.generateResponse("Success",HttpStatus.OK,buyer );
         }catch (Exception e){
             return  ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null );
         }
@@ -46,7 +46,7 @@ public class BuyerController {
     @PostMapping
     public ResponseEntity<Object> save(@RequestBody Buyer proper ){
         try {
-            Buyer result = properService.save( proper );
+            Buyer result = buyerService.save( proper );
 
             return  ResponseHandler.generateResponse("Success",HttpStatus.CREATED,result);
 
@@ -60,12 +60,12 @@ public class BuyerController {
                                                @RequestParam String apellidoN,
                                                @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fNacimiento) {
         try {
-            int updatedRows = properService.updateProperById(id,nombreN, apellidoN, fNacimiento);
+            int updatedRows = buyerService.updateProperById(id,nombreN, apellidoN, fNacimiento);
 
             if (updatedRows > 0) {
                 return ResponseHandler.generateResponse("Success", HttpStatus.OK, null);
             } else {
-                return ResponseHandler.generateResponse("No se encontró el Proper con el ID proporcionado", HttpStatus.NOT_FOUND, null);
+                return ResponseHandler.generateResponse("No se encontró el comprador con el ID proporcionado", HttpStatus.NOT_FOUND, null);
             }
         } catch (Exception e) {
             return ResponseHandler.generateResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null);
@@ -75,7 +75,7 @@ public class BuyerController {
     @GetMapping("/nombre/{nombre}")
     public ResponseEntity<Object> findByName(@PathVariable  String nombre){
         try {
-            List<Buyer> result = properService.findByName( nombre );
+            List<Buyer> result = buyerService.findByName( nombre );
 
             return  ResponseHandler.generateResponse("Success",HttpStatus.OK,result );
         }catch (Exception e){
@@ -86,15 +86,15 @@ public class BuyerController {
     @GetMapping("/cars/{id}")
     public ResponseEntity<Object> getBooks(@PathVariable Integer id){
         try{
-            Buyer proper = properService.findById( id );
-            if( proper != null ){
+            Buyer buyer = buyerService.findById( id );
+            if( buyer != null ){
 
-                List<Car> result = properService.getCars(proper);
+                List<Car> result = buyerService.getCars(buyer);
 
                 return ResponseHandler.generateResponse("Succes",HttpStatus.CREATED, result );
             }
 
-            return ResponseHandler.generateResponse("Success Author",HttpStatus.NOT_FOUND, null );
+            return ResponseHandler.generateResponse("No se encontro el comprador",HttpStatus.NOT_FOUND, null );
 
         }catch( Exception e ){
 
@@ -105,10 +105,10 @@ public class BuyerController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable Integer id ){
         try{
-            Buyer proper = properService.findById( id );
+            Buyer proper = buyerService.findById( id );
             if( proper != null ){
 
-                properService.delete( proper );
+                buyerService.delete( proper );
 
                 return ResponseHandler.generateResponse("Succes",HttpStatus.ACCEPTED, proper );
             }
